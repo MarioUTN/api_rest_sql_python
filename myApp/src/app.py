@@ -19,6 +19,11 @@ def page_not_found(error):
     return "<h1>Not found page</h1>", 404
 
 
+@app.route('/')
+def index():
+    return '<h1>Hi, I am Mario and Who are you?</h1>'
+
+
 if __name__ == '__main__':
     app.config.from_object(config['development'])
 

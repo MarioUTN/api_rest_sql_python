@@ -45,6 +45,8 @@ create table hiperbola(
     constraint pk_hiperbola primary key(id_hiperbola),
     constraint fk_punto_hiperbola foreign key(centro) references punto(id_punto)
 );
+
+
 insert into punto(coord_x, coord_y)
 values(-1, 3);
 insert into punto(coord_x, coord_y)
@@ -101,6 +103,7 @@ insert into hiperbola(centro, a, b, eje_focal)
 values(4, 5, 4, 'y');
 insert into hiperbola(centro, a, b, eje_focal)
 values(3, 3, 6, 'y');
+
 declare @points nvarchar(max)
 set @points = (
         select p.id_punto,
@@ -110,6 +113,9 @@ set @points = (
         where p.id_punto = 1 for json path
     )
 select @points as points return
+
+
+
 declare @lines nvarchar(max)
 set @lines = (
         select r.id_recta as 'recta.id_recta',
@@ -126,6 +132,8 @@ set @lines = (
             and r.punto_b = pb.id_punto for json path
     )
 select @lines as lines return
+
+
 declare @circunferences nvarchar(max)
 set @circunferences = (
         select c.id_circunferencia as 'circunferencia.id_circunferencia',
@@ -136,6 +144,8 @@ set @circunferences = (
             inner join punto p on c.centro = p.id_punto for json path
     )
 select @circunferences as circunferences return
+
+
 declare @elipses nvarchar(max)
 set @elipses = (
         select e.id_elipse as 'elipse.id_elipse',
@@ -149,6 +159,8 @@ set @elipses = (
             inner join punto p on e.centro = p.id_punto for json path
     )
 select @elipses as elipses return
+
+
 declare @hiperbolas nvarchar(max)
 set @hiperbolas = (
         select h.id_hiperbola as 'hiperbola.id_hiperbola',
@@ -162,6 +174,9 @@ set @hiperbolas = (
             inner join punto p on h.centro = p.id_punto for json path
     )
 select @hiperbolas as hiperbolas return
+
+
+
 declare @parabolas nvarchar(max)
 set @parabolas = (
         select p.id_parabola as 'parabola.id_parabola',
@@ -174,11 +189,19 @@ set @parabolas = (
             inner join punto v on p.vertice = v.id_punto for json path
     )
 select @parabolas as parabolas return
+
+
+
+
+
 select p.id_punto,
     p.coord_x,
     p.coord_y
 from punto p
 where p.id_punto = 40 for json path;
+
+
+
 select r.id_recta as 'recta.id_recta',
     pa.id_punto as 'punto_a.id_punto',
     pa.coord_x as 'punto_a.coord_x',
@@ -192,6 +215,9 @@ from punto pa,
 where r.punto_a = pa.id_punto
     and r.punto_b = pb.id_punto
     and r.id_recta = 1 for json path;
+	
+	
+	
 select c.id_circunferencia as 'circunferencia.id_circunferencia',
     p.id_punto as 'centro.id_punto',
     p.coord_x as 'centro.coord_x',
@@ -199,6 +225,9 @@ select c.id_circunferencia as 'circunferencia.id_circunferencia',
 from circunferencia c
     inner join punto p on c.centro = p.id_punto
     and c.id_circunferencia = 1 for json path;
+	
+	
+	
 select e.id_elipse as 'elipse.id_elipse',
     e.a as 'elipse.a',
     e.b as 'elipse.b',
@@ -209,6 +238,9 @@ select e.id_elipse as 'elipse.id_elipse',
 from elipse e
     inner join punto p on e.centro = p.id_punto
     and e.id_elipse = 1 for json path;
+	
+	
+
 select h.id_hiperbola as 'hiperbola.id_hiperbola',
     h.a as 'hiperbola.a',
     h.b as 'hiperbola.b',
@@ -219,6 +251,9 @@ select h.id_hiperbola as 'hiperbola.id_hiperbola',
 from hiperbola h
     inner join punto p on h.centro = p.id_punto
     and h.id_hiperbola = 1 for json path;
+	
+	
+	
 select p.id_parabola as 'parabola.id_parabola',
     p.p as 'parabola.p',
     p.eje_focal as 'parabola.eje_focal',
@@ -228,6 +263,10 @@ select p.id_parabola as 'parabola.id_parabola',
 from parabola p
     inner join punto v on p.vertice = v.id_punto
     and p.id_parabola = 1 for json path;
+	
+	
+	
+	
 insert into parabola (vertice, p, eje_focal)
 values (4, 20.0, 'y');
 insert into parabola (vertice, p, eje_focal)
@@ -628,6 +667,8 @@ insert into recta (punto_a, punto_b)
 values (4, 20);
 insert into recta (punto_a, punto_b)
 values (13, 20);
+
+
 insert into circunferencia (centro, radio)
 values (9, 18.65);
 insert into circunferencia (centro, radio)
@@ -828,6 +869,8 @@ insert into circunferencia (centro, radio)
 values (8, 8.18);
 insert into circunferencia (centro, radio)
 values (19, 15.9);
+
+
 insert into elipse (centro, a, b, eje_focal)
 values (8, 22.93, 15.94, 'x');
 insert into elipse (centro, a, b, eje_focal)
@@ -1028,6 +1071,9 @@ insert into elipse (centro, a, b, eje_focal)
 values (4, 22.42, 16.18, 'y');
 insert into elipse (centro, a, b, eje_focal)
 values (17, 22.32, 15.09, 'y');
+
+
+
 insert into hiperbola (centro, a, b, eje_focal)
 values (6, 21.42, 16.54, 'x');
 insert into hiperbola (centro, a, b, eje_focal)
@@ -1228,3 +1274,230 @@ insert into hiperbola (centro, a, b, eje_focal)
 values (2, 23.89, 15.08, 'y');
 insert into hiperbola (centro, a, b, eje_focal)
 values (19, 21.09, 15.37, 'y');
+
+
+
+
+
+
+go
+create procedure get_points
+as
+declare @point nvarchar(max)
+set @point = (
+        select p.id_punto,
+            p.coord_x,
+            p.coord_y
+        from punto p
+        for json path
+    )
+select @point as points return
+
+
+go
+create procedure get_lines
+as
+declare @lines nvarchar(max)
+set @lines = (
+        select r.id_recta as 'recta.id_recta',
+            pa.id_punto as 'punto_a.id_punto',
+            pa.coord_x as 'punto_a.coord_x',
+            pa.coord_y as 'punto_a.coord_y',
+            pb.id_punto 'punto_b.id_punto',
+            pb.coord_x as 'punto_b.coord_x',
+            pb.coord_y as 'punto_b.coord_y'
+        from punto pa,
+            recta r,
+            punto pb
+        where r.punto_a = pa.id_punto
+            and r.punto_b = pb.id_punto for json path
+    )
+select @lines as lines return
+
+
+go
+create procedure get_circunferences
+as
+declare @circunferences nvarchar(max)
+set @circunferences = (
+        select c.id_circunferencia as 'circunferencia.id_circunferencia',
+            p.id_punto as 'centro.id_punto',
+            p.coord_x as 'centro.coord_x',
+            p.coord_y as 'centro.coord_y'
+        from circunferencia c
+            inner join punto p on c.centro = p.id_punto for json path
+    )
+select @circunferences as circunferences return
+
+go
+create procedure get_elipses
+as
+declare @elipses nvarchar(max)
+set @elipses = (
+        select e.id_elipse as 'elipse.id_elipse',
+            e.a as 'elipse.a',
+            e.b as 'elipse.b',
+            e.eje_focal as 'elipse.eje_focal',
+            p.id_punto as 'centro.id_punto',
+            p.coord_x as 'centro.coord_x',
+            p.coord_y as 'centro.coord_y'
+        from elipse e
+            inner join punto p on e.centro = p.id_punto for json path
+    )
+select @elipses as elipses return
+
+go
+
+create procedure get_hiperbolas
+as
+declare @hiperbolas nvarchar(max)
+set @hiperbolas = (
+        select h.id_hiperbola as 'hiperbola.id_hiperbola',
+            h.a as 'hiperbola.a',
+            h.b as 'hiperbola.b',
+            h.eje_focal as 'hiperbola.eje_focal',
+            p.id_punto as 'centro.id_punto',
+            p.coord_x as 'centro.coord_x',
+            p.coord_y as 'centro.coord_y'
+        from hiperbola h
+            inner join punto p on h.centro = p.id_punto for json path
+    )
+select @hiperbolas as hiperbolas return
+
+
+go
+
+create procedure get_parabolas
+as
+declare @parabolas nvarchar(max)
+set @parabolas = (
+        select p.id_parabola as 'parabola.id_parabola',
+            p.p as 'parabola.p',
+            p.eje_focal as 'parabola.eje_focal',
+            v.id_punto as 'vertice.id_punto',
+            v.coord_x as 'vertice.coord_x',
+            v.coord_y as 'vertice.coord_y'
+        from parabola p
+            inner join punto v on p.vertice = v.id_punto for json path
+    )
+select @parabolas as parabolas return
+
+exec get_parabolas
+
+
+go
+create procedure get_point @id integer
+as
+declare @punto nvarchar(255)
+set @punto = (
+select p.id_punto,
+    p.coord_x,
+    p.coord_y
+from punto p
+where p.id_punto = @id for json path
+)
+select @punto as punto return
+
+
+go
+create procedure get_line @id integer
+as
+declare @line nvarchar(255)
+set @line = (
+select r.id_recta as 'recta.id_recta',
+    pa.id_punto as 'punto_a.id_punto',
+    pa.coord_x as 'punto_a.coord_x',
+    pa.coord_y as 'punto_a.coord_y',
+    pb.id_punto 'punto_b.id_punto',
+    pb.coord_x as 'punto_b.coord_x',
+    pb.coord_y as 'punto_b.coord_y'
+from punto pa,
+    recta r,
+    punto pb
+where r.punto_a = pa.id_punto
+    and r.punto_b = pb.id_punto
+    and r.id_recta = @id for json path
+	)
+select @line as line return
+	
+	
+go
+create procedure get_circunference @id integer
+as
+declare @circunference nvarchar(255)
+set @circunference = (
+select c.id_circunferencia as 'circunferencia.id_circunferencia',
+    p.id_punto as 'centro.id_punto',
+    p.coord_x as 'centro.coord_x',
+    p.coord_y as 'centro.coord_y'
+from circunferencia c
+    inner join punto p on c.centro = p.id_punto
+    and c.id_circunferencia = @id for json path
+	)
+select @circunference as circunference return
+	
+	
+
+
+go
+create procedure get_elipse @id integer
+as
+declare @elipse nvarchar(255)
+set @elipse = (
+select e.id_elipse as 'elipse.id_elipse',
+    e.a as 'elipse.a',
+    e.b as 'elipse.b',
+    e.eje_focal as 'elipse.eje_focal',
+    p.id_punto as 'centro.id_punto',
+    p.coord_x as 'centro.coord_x',
+    p.coord_y as 'centro.coord_y'
+from elipse e
+    inner join punto p on e.centro = p.id_punto
+    and e.id_elipse = @id for json path)
+	select @elipse as elipse return
+	
+	
+go
+create procedure get_hiperbola @id integer
+as
+declare @hiperbola nvarchar(255)
+set @hiperbola = (
+select h.id_hiperbola as 'hiperbola.id_hiperbola',
+    h.a as 'hiperbola.a',
+    h.b as 'hiperbola.b',
+    h.eje_focal as 'hiperbola.eje_focal',
+    p.id_punto as 'centro.id_punto',
+    p.coord_x as 'centro.coord_x',
+    p.coord_y as 'centro.coord_y'
+from hiperbola h
+    inner join punto p on h.centro = p.id_punto
+    and h.id_hiperbola = @id for json path
+	)
+	select @hiperbola as hiperbola return
+	
+	
+go
+create procedure get_parabola @id integer
+as
+declare @parabola nvarchar(255)
+set @parabola = (
+select p.id_parabola as 'parabola.id_parabola',
+    p.p as 'parabola.p',
+    p.eje_focal as 'parabola.eje_focal',
+    v.id_punto as 'vertice.id_punto',
+    v.coord_x as 'vertice.coord_x',
+    v.coord_y as 'vertice.coord_y'
+from parabola p
+    inner join punto v on p.vertice = v.id_punto
+    and p.id_parabola = @id for json path
+	)
+	select @parabola as parabola return
+	
+	
+	
+	
+
+
+
+
+
